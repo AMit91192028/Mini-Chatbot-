@@ -25,31 +25,29 @@ const Message = ({ message }) => {
   const displayText = typeof message.text === 'object' ? 
     JSON.stringify(message.text) : String(message.text);
 
-  // Function to handle copying message
+  
   const handleCopy = () => {
     navigator.clipboard.writeText(displayText);
   };
 
-  // Function to handle bold text within a paragraph
+  
   const formatBoldText = (text) => {
     const parts = text.split(/(\*\*.*?\*\*)/g);
     return parts.map((part, index) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        // Remove the asterisks and wrap in bold tag
         return <strong key={index} className="bold-text">{part.slice(2, -2)}</strong>;
       }
       return part;
     });
   };
 
-  // Function to format text with bullets and line breaks
+ 
   const formatText = (text) => {
-    // Split text into paragraphs
+    
     return text.split('\n').map((paragraph, i) => {
-      // Skip empty paragraphs
+     
       if (!paragraph.trim()) return null;
 
-      // Check if paragraph starts with bullet points (* or -)
       if (paragraph.trim().startsWith('*') && !paragraph.trim().startsWith('**')) {
         return (
           <li key={i} className="message-bullet">
@@ -57,7 +55,7 @@ const Message = ({ message }) => {
           </li>
         );
       }
-      // For normal paragraphs
+    
       return paragraph.trim() && (
         <p key={i}>
           {formatBoldText(paragraph)}
@@ -117,7 +115,7 @@ export default function App() {
   const containerRef = useRef(null)
   const [socket,setSocket] = useState(null)
 useEffect(()=>{
-   let  socketInstance = io("http://localhost:3000")
+   let  socketInstance = io("https://mini-chatbot-backend-x6x6.onrender.com")
    setSocket(socketInstance)
 
    socketInstance.on('ai-response',(response)=>{
